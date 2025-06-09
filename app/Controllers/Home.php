@@ -82,13 +82,16 @@ class Home extends BaseController
 
      }
 
-     public function show_posts(){
+     public function show_posts($id = ""){
             $posts = [];
-
             $db      = \Config\Database::connect();
             $builder = $db->table('posts');
 
-            $query   = $builder->get();
+            if($id==""){
+                 $query   = $builder->get();
+            }else{
+                $query   = $builder->where('id',esc($id))->get();
+            }
 
             foreach ($query->getResult() as $row) {
                $posts[] = $row;

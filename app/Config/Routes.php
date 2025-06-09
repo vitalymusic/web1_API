@@ -12,3 +12,4 @@ $routes->get('/users/(:num)', 'Home::show_users/$1');
 
 
 $routes->get('/posts', 'Home::show_posts');
+$routes->get('/posts/(:num)', 'Home::show_posts/$1');
