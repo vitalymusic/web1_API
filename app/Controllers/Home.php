@@ -4,6 +4,14 @@ namespace App\Controllers;
 
 class Home extends BaseController
 {
+    function __construct(){
+            $db  = \Config\Database::connect();
+            $this->builder = $db->table('posts');
+            
+    }
+
+
+
     public function index()
     {
         $data = [
@@ -84,13 +92,11 @@ class Home extends BaseController
 
      public function show_posts($id = ""){
             $posts = [];
-            $db      = \Config\Database::connect();
-            $builder = $db->table('posts');
-
+            
             if($id==""){
-                 $query   = $builder->get();
+                 $query   = $this->builder->get();
             }else{
-                $query   = $builder->where('id',esc($id))->get();
+                $query   = $this->builder->where('id',esc($id))->get();
             }
 
             foreach ($query->getResult() as $row) {
@@ -101,5 +107,61 @@ class Home extends BaseController
 
 
      }
+
+
+     public function add_post(){
+        $request = service('request');
+        $data = [
+            "post_title" => esc($this->request->getPost("post_title")),
+            "post_content" => $this->request->getPost("post_content")
+        ];
+
+
+        $result = $this->builder->insert($data);
+
+        if($result){
+            return $this->response->setJSON(["success"=>true]);
+        }else{
+            return $this->response->setJSON(["success"=>false]);
+        }
+
+
+        //return $this->response->setJSON($data);
+     }
+
+     public function update_post($id){
+
+        $request = service('request');
+        $data = [
+            "post_title" => esc($this->request->getPost("post_title")),
+            "post_content" => $this->request->getPost("post_content")
+        ];
+
+
+        $result = $this->builder->update($data,['id' => $id]);
+
+        if($result){
+            return $this->response->setJSON(["success"=>true]);
+        }else{
+            return $this->response->setJSON(["success"=>false]);
+        }
+
+     }
+
+
+     public function delete_post($id){
+        $request = service('request');
+        
+        if($request->is('delete')){
+                $result = $this->builder->delete(['id' => $id]);
+        }
+        
+        if($result){
+            return $this->response->setJSON(["deleted"=>true]);
+        }
+
+     }
+
+
 
 }
