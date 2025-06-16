@@ -14,15 +14,15 @@ class Home extends BaseController
 
     public function index()
     {
-        $data = [
-            "title" => "Page1",
-            "content" => "This is page 1",
-            "img" => "https://codeigniter.com/assets/icons/44521256.png"
-        ];
+        // $data = [
+        //     "title" => "Page1",
+        //     "content" => "This is page 1",
+        //     "img" => "https://codeigniter.com/assets/icons/44521256.png"
+        // ];
 
-        return $this->response->setJSON($data);
+        // return $this->response->setJSON($data);
  
-        //return view('welcome_message');
+        return view('react');
     }
 
      public function show_users($userId = "")
@@ -94,7 +94,7 @@ class Home extends BaseController
             $posts = [];
             
             if($id==""){
-                 $query   = $this->builder->get();
+                 $query   = $this->builder->orderBy('post_date', 'DESC')->get();
             }else{
                 $query   = $this->builder->where('id',esc($id))->get();
             }
@@ -151,10 +151,10 @@ class Home extends BaseController
 
      public function delete_post($id){
         $request = service('request');
-        
-        if($request->is('delete')){
+        if($request->is("delete")){
                 $result = $this->builder->delete(['id' => $id]);
         }
+        
         
         if($result){
             return $this->response->setJSON(["deleted"=>true]);
