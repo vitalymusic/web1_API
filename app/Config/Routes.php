@@ -23,6 +23,11 @@ $routes->post('/posts/update/(:num)', 'Home::update_post/$1');
 
 
 // Dzēšana
-$routes->delete('/posts/delete/(:num)', 'Home::delete_post/$1');
+$routes->get('/posts/delete/(:num)', 'Home::delete_post/$1');
 
 
+
+
+// Epastu sūtīšana
+$routes->get('/email', 'Emailsender::index');
+$routes->post('/email/send', 'Emailsender::send');

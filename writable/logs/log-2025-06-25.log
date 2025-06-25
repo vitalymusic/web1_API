@@ -1,0 +1,26 @@
+CRITICAL - 2025-06-25 17:29:06 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "email_form.php"
+[Method: GET, Route: email]
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 39.
+ 1 SYSTEMPATH/View/View.php(212): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('email_form.php')
+ 2 SYSTEMPATH/Common.php(1173): CodeIgniter\View\View->render('email_form', [], true)
+ 3 APPPATH/Controllers/Emailsender.php(12): view('email_form')
+ 4 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\Emailsender->index()
+ 5 SYSTEMPATH/CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Emailsender))
+ 6 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH/Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH/index.php(69): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-25 18:13:25 --> TypeError: fsockopen(): Argument #2 ($port) must be of type int, string given
+[Method: POST, Route: email/send]
+in SYSTEMPATH/Email/Email.php on line 1905.
+ 1 SYSTEMPATH/Email/Email.php(1905): fsockopen('smtp.gmail.com', '587', null, null, 5)
+ 2 SYSTEMPATH/Email/Email.php(1813): CodeIgniter\Email\Email->SMTPConnect()
+ 3 SYSTEMPATH/Email/Email.php(1698): CodeIgniter\Email\Email->sendWithSmtp()
+ 4 SYSTEMPATH/Email/Email.php(1592): CodeIgniter\Email\Email->spoolEmail()
+ 5 APPPATH/Controllers/Emailsender.php(40): CodeIgniter\Email\Email->send()
+ 6 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\Emailsender->send()
+ 7 SYSTEMPATH/CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Emailsender))
+ 8 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH/Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH/index.php(69): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
