@@ -6,6 +6,8 @@ class Admin extends BaseController
 {
     function __construct(){
             $this->db  = \Config\Database::connect();
+            $this->session = session();
+            $this->request = service('request');
     }
 
 
@@ -47,8 +49,9 @@ class Admin extends BaseController
 
     }
     public function authorize(){
-        
-
+      $data =   $this->request->getPost();
+      dd($data);
+      
     }
     public function logout(){
 

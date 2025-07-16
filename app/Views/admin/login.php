@@ -12,7 +12,7 @@
   <div class="bg-white p-8 rounded-2xl shadow-md w-full max-w-sm">
     <h2 class="text-2xl font-bold text-center mb-6 text-gray-700">Pieteikšanās</h2>
 
-    <form action="login.php" method="POST" class="space-y-4">
+    <form action="<?=base_url('/admin/authorize')?>" method="POST" class="space-y-4">
       <div>
         <label class="block text-sm font-medium text-gray-600 mb-1" for="email">E-pasts</label>
         <input type="email" name="email" id="email" required
