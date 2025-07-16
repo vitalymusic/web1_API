@@ -4,6 +4,12 @@ namespace App\Controllers;
 
 class Admin extends BaseController
 {
+    function __construct(){
+            $this->db  = \Config\Database::connect();
+    }
+
+
+
 
     public function index(){
 
@@ -12,9 +18,20 @@ class Admin extends BaseController
         return view('admin/main',$data);
     }
     public function users(){
+
+        $users = [];
+        $builder = $this->db->table('users');
+        $query = $builder->get();
+
+          foreach ($query->getResult() as $row) {
+               $users[] = $row;
+            }
+
          $data["title"] = "Lietotāji";
+         $data["users"] = $users;
 
         return view('admin/users',$data);
+
     }
     public function posts(){
          $data["title"] = "Raksti";
