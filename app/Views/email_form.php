@@ -36,6 +36,7 @@
             <input type="submit" value="send Email">
         </form>
     </div>
-    
+    <!-- Pārtaisīt par AJAX izmantot jquery -->
+     
 </body>
 </html>

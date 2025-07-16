@@ -31,3 +31,7 @@ $routes->get('/posts/delete/(:num)', 'Home::delete_post/$1');
 // Epastu sūtīšana
 $routes->get('/email', 'Emailsender::index');
 $routes->post('/email/send', 'Emailsender::send');
+
+
+// admin panelis
+$routes->get('/admin', 'Admin::index');

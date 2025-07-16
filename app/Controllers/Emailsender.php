@@ -26,8 +26,6 @@ class Emailsender extends BaseController
             $config['SMTPPass'] = '';
             $config['SMTPHost'] = 'smtp.gmail.com';
 
-
-
             $email->initialize($config);
 
 
