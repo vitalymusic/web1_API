@@ -31,6 +31,12 @@
       </button>
     </form>
 
+     <?php if (session()->getFlashdata("error")) : ?>
+      <div class="mb-4 mt-4 p-3 text-sm text-red-700 bg-red-100 border border-red-300 rounded text-center">
+        <?= htmlspecialchars(session()->getFlashdata("error")) ?>
+      </div>
+    <?php endif; ?>
+
     <p class="text-sm text-gray-500 text-center mt-4">
       Vai nav konta? <a href="register.php" class="text-blue-600 hover:underline">Reģistrēties</a>
     </p>

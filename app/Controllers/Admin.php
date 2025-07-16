@@ -10,16 +10,31 @@ class Admin extends BaseController
             $this->request = service('request');
     }
 
+    private function checkUser (){
+    if($this->session->get("logged_in")==false || $this->session->get("user")==""){
+         return false;
+   }else{
+        return true;
+   }
+    
+   }
 
 
 
     public function index(){
+
+         if(!$this->checkUser()){
+            return redirect()-> to("/admin/login");
+         };
 
         $data["title"] = "Galvenā";
 
         return view('admin/main',$data);
     }
     public function users(){
+        if(!$this->checkUser()){
+            return redirect()-> to("/admin/login");
+         };
 
         $users = [];
         $builder = $this->db->table('users');
@@ -36,10 +51,19 @@ class Admin extends BaseController
 
     }
     public function posts(){
+        if(!$this->checkUser()){
+            return redirect()-> to("/admin/login");
+         };
+
          $data["title"] = "Raksti";
         return view('admin/posts',$data);
     }
     public function gallery(){
+        if(!$this->checkUser()){
+            return redirect()-> to("/admin/login");
+         };
+
+
          $data["title"] = "Galerija";
         return view('admin/gallery',$data);
     }
@@ -49,14 +73,57 @@ class Admin extends BaseController
 
     }
     public function authorize(){
+
+
+        // janis.ozolins@example.com
+        // Parole123
+
       $data =   $this->request->getPost();
-      dd($data);
       
+
+
+       $user = "";
+        $builder = $this->db->table('users');
+        $query = $builder->like('email',esc($data["email"]))->get();
+        $user = $query->getResultArray();
+        // return dd($user);
+
+        if($user){
+            if(password_verify($data["password"], $user[0]["password"])) {
+                $this->session->set("user",$user[0]);
+                $this->session->set("logged_in",true);
+                return redirect()->to('/admin');
+        }else{
+            $this->session->set("user","");
+            $this->session->set("logged_in",false);
+            $this->session->setFlashdata("error","Lietotājvārds vai parole nav pareizs");
+             return redirect()->to('/admin/login');
+        }
+    }else{
+            $this->session->set("user","");
+            $this->session->set("logged_in",false);
+            $this->session->setFlashdata("error","Lietotājvārds vai parole nav pareizs");
+            return redirect()->to('/admin/login');
+    }
+       
+
+
+
+
+    //   1. Sameklēt lietotāju pēc lietotājvārda datubāzē
+    //   2. Ja lietotājs ir, tad salīdzināt paroli
+    //    3. ja lietotājs neeksistē, tad izvadīt kļūdas paziņojumu
+    //     4. Ja lietotājs ir, bet parole nesakrīt, tad arī izvadīt paziņojumu
+    // 5. Ja lietotājs ir un parole sakrīt, tad saglabāt lietotāju  sesijā  
+
     }
     public function logout(){
 
-        // 
+        $this->session->set("user","");
+        $this->session->set("logged_in",false);
+        return redirect()->to('/admin/login');
     }
-    
 
+
+   
 }
