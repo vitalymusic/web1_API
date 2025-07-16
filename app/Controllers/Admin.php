@@ -41,6 +41,15 @@ class Admin extends BaseController
          $data["title"] = "Galerija";
         return view('admin/gallery',$data);
     }
+
+    public function login(){
+         return view('admin/login');
+
+    }
+    public function authorize(){
+        
+
+    }
     public function logout(){
 
         // 
