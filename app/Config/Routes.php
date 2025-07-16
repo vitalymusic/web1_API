@@ -35,3 +35,7 @@ $routes->post('/email/send', 'Emailsender::send');
 
 // admin panelis
 $routes->get('/admin', 'Admin::index');
+$routes->get('/admin/users', 'Admin::users');
+$routes->get('/admin/posts', 'Admin::posts');
+$routes->get('/admin/gallery', 'Admin::gallery');
+$routes->get('/admin/logout', 'Admin::logout');
