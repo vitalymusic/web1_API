@@ -82,10 +82,12 @@ class Admin extends BaseController
     public function file_upload(){
                 // $data = $this->request->getPost();
 
-                $img = $this->request->getFile('files[]');
+                $img = $this->request->getFile('files');
+                $fileName = $file->getClientName();
 
-            if (! $img->hasMoved()) {
-                $filepath = WRITEPATH . 'uploads/' . $img->store();
+
+                
+            if ($file->move(WRITEPATH . 'uploads/', $fileName)) {
                  return $this->response->setJSON(["uploded"=>"ok"]); 
             }else{
                 return $this->response->setJSON(["uploded"=>"false"]); 
