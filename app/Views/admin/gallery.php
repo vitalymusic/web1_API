@@ -37,26 +37,20 @@
   <!-- Failu pārlūks -->
 
 
-   <main class="p-6 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+   <main class="p-6 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6" id="fileList">
     <!-- Folder -->
-    <div class="bg-white p-4 rounded-lg shadow flex items-center space-x-4 hover:bg-gray-50 cursor-pointer">
+    <!-- <div class="bg-white p-4 rounded-lg shadow flex items-center space-x-4 hover:bg-gray-50 cursor-pointer">
       <div class="text-yellow-500 text-3xl">📁</div>
       <div>
         <p class="text-gray-800 font-medium">Documents</p>
         <p class="text-sm text-gray-500">4 files</p>
       </div>
-    </div>
+    </div> -->
 
     <!-- File -->
-    <div class="bg-white p-4 rounded-lg shadow flex items-center space-x-4 hover:bg-gray-50">
-      <div class="text-blue-500 text-3xl">📄</div>
-      <div>
-        <p class="text-gray-800 font-medium">report.pdf</p>
-        <p class="text-sm text-gray-500">450 KB</p>
-      </div>
-    </div>
+        Šeit nekā nav
 
-    <!-- More Files -->
+    <!-- More Files
     <div class="bg-white p-4 rounded-lg shadow flex items-center space-x-4 hover:bg-gray-50">
       <div class="text-green-500 text-3xl">🖼️</div>
       <div>
@@ -71,12 +65,15 @@
         <p class="text-gray-800 font-medium">song.mp3</p>
         <p class="text-sm text-gray-500">3.4 MB</p>
       </div>
-    </div>
+    </div> -->
   </main>
 
 
   <script>
     $(document).ready(()=>{
+                listFiles();
+
+
             $("#file_upload_form").on("submit",function(e){
                 e.preventDefault();
                 formData = new FormData(document.querySelector('#file_upload_form'));
@@ -93,12 +90,60 @@
                 .done(function(resp){
                     $('#loadingSpinner').addClass('hidden');
                     alert('Visi faili ir ielādēti');
+                    listFiles();
                 })
                 .fail(function(resp){
                     alert('Kļūda: '+ resp.responseJSON.message);
                 })
             })
     })
+
+
+    function listFiles(){
+            let icons = [
+                {
+                    mime:"application/zip",
+                    icon:"📁"
+                },
+                {
+                    mime:"image/jpeg",
+                    icon:"🖼️"
+                },
+                {
+                    mime:"text/html",
+                    icon:"&#9733"
+                }
+            ];
+
+            function showIcon(mime){
+                icons.find((item)=>{
+                    if(item.mime == mime){
+                        return item.icon
+                    }
+                })
+            }
+
+            $.get('<?=base_url("admin/gallery/list_files")?>',function(files){
+                if(files){  
+                 $('#fileList').html("");     
+                  files.forEach((file)=>{
+             $('#fileList').append(`
+                <div class="bg-white p-4 rounded-lg shadow flex items-center space-x-4 hover:bg-gray-50">
+                        <div class="text-blue-500 text-3xl">${showIcon(file.mime)}</div>
+                        <div>
+                            <a href="${file.url}"><p class="text-gray-800 font-medium">${file.name}</p>
+                            </a>
+                            <p class="text-sm text-gray-500">${file.size} kBytes</p>
+                        </div>
+                        </div>
+                    
+                    `);
+                  })      
+                    
+                }
+            })
+
+    }
 
   </script>
     

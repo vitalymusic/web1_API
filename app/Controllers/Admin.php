@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Controllers;
+use CodeIgniter\Files\File;
+use CodeIgniter\Files\FileCollection;
+
 
 class Admin extends BaseController
 {
@@ -88,8 +91,10 @@ class Admin extends BaseController
 
                 foreach($files["files"] as $file){ 
                     $fileName = $file->getClientName();
+                        
 
-                    if(! $file->move(WRITEPATH . 'uploads/', $fileName)){
+
+                    if(! $file->move(FCPATH . 'uploads/', $fileName)){
                           $error[] = $file->getError();
                     };
             }
@@ -101,6 +106,37 @@ class Admin extends BaseController
                 }
 
     }
+
+    public function list_files(){
+                // if(!$this->checkUser()){
+                // return NULL;
+                //  };
+
+
+                $folder = FCPATH . 'uploads/';
+                $collection = new FileCollection();
+                $collection->add($folder);
+
+                $files = [];
+
+        foreach ($collection->get() as $filePath) {
+            $file = new File($filePath);
+
+            if ($file->isFile()) {
+                $files[] = [
+                    'name'     => $file->getBasename(),
+                    'size'     => $file->getSizeByUnit('kb'),
+                    'mime'     => $file->getMimeType(),
+                    'url'      => base_url('uploads/' . $file->getBasename()),
+                    'modified' => date('Y-m-d H:i:s', $file->getMTime()),
+                ];
+            }
+        }
+
+        return $this->response->setJSON($files);
+    }
+
+
 
     public function login(){
          return view('admin/login');
