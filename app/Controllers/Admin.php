@@ -59,9 +59,20 @@ class Admin extends BaseController
         return view('admin/posts',$data);
     }
     public function gallery(){
-        if(!$this->checkUser()){
-            return redirect()-> to("/admin/login");
-         };
+        // if(!$this->checkUser()){
+        //     return redirect()-> to("/admin/login");
+        //  };
+
+
+        // 1. Forma kas ielādē failus (HTML+ Jquery)
+        // 2. Funkcija kas apstrādā formu (upload files)
+        // 3. Funkcija, kas nolasa failus no mapes, un atgriež JSON
+        // 4. Ģenerēt failu sarakstu no JSON datiem parādīt tos HTML
+        // 5. Failu dzēšana no mapes (papildus) 
+
+
+
+
 
 
          $data["title"] = "Galerija";
@@ -86,7 +97,7 @@ class Admin extends BaseController
         $builder = $this->db->table('users');
         $query = $builder->like('email',esc($data["email"]))->get();
         $user = $query->getResultArray();
-        // return dd($user);
+       
 
         if($user){
             if(password_verify($data["password"], $user[0]["password"])) {
