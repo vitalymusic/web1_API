@@ -89,10 +89,8 @@ class Admin extends BaseController
                 foreach($files["files"] as $file){ 
                     $fileName = $file->getClientName();
 
-                    if($file->move(WRITEPATH . 'uploads/', $fileName)){
-                         $error = false;
-                    }else{
-                         $error = $file->getError();
+                    if(! $file->move(WRITEPATH . 'uploads/', $fileName)){
+                          $error[] = $file->getError();
                     };
             }
 
