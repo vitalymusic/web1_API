@@ -118,7 +118,7 @@
             function showIcon(mime){
                 icons.find((item)=>{
                     if(item.mime == mime){
-                        return item.icon
+                        return true
                     }
                 })
             }
@@ -129,7 +129,7 @@
                   files.forEach((file)=>{
              $('#fileList').append(`
                 <div class="bg-white p-4 rounded-lg shadow flex items-center space-x-4 hover:bg-gray-50">
-                        <div class="text-blue-500 text-3xl">${showIcon(file.mime)}</div>
+                        <div class="text-blue-500 text-3xl">${''}</div>
                         <div>
                             <a href="${file.url}"><p class="text-gray-800 font-medium">${file.name}</p>
                             </a>
