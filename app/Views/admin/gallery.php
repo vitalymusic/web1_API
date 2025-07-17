@@ -6,13 +6,13 @@
     <form action="<?=base_url("/admin/gallery/upload")?>" method="POST" enctype="multipart/form-data" class="space-y-6">
       <div>
         <label for="file" class="block text-sm font-medium text-gray-700">Select a file</label>
-        <input type="file" name="files" id="file"
+        <input type="file" name="files[]" id="file"
                class="mt-2 block w-full text-sm text-gray-700
                       file:mr-4 file:py-2 file:px-4
                       file:rounded-full file:border-0
                       file:text-sm file:font-semibold
                       file:bg-blue-50 file:text-blue-700
-                      hover:file:bg-blue-100">
+                      hover:file:bg-blue-100" multiple >
       </div>
 
       <div class="text-center">
