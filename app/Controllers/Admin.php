@@ -79,6 +79,20 @@ class Admin extends BaseController
         return view('admin/gallery',$data);
     }
 
+    public function file_upload(){
+                // $data = $this->request->getPost();
+
+                $img = $this->request->getFile('files[]');
+
+            if (! $img->hasMoved()) {
+                $filepath = WRITEPATH . 'uploads/' . $img->store();
+                 return $this->response->setJSON(["uploded"=>"ok"]); 
+            }else{
+                return $this->response->setJSON(["uploded"=>"false"]); 
+            }
+
+    }
+
     public function login(){
          return view('admin/login');
 

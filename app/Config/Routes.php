@@ -41,3 +41,4 @@ $routes->get('/admin/gallery', 'Admin::gallery');
 $routes->get('/admin/logout', 'Admin::logout');
 $routes->get('/admin/login', 'Admin::login');
 $routes->post('/admin/authorize', 'Admin::authorize');
+$routes->post('/admin/gallery/upload', 'Admin::file_upload');
