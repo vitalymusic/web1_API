@@ -3,7 +3,7 @@
 <?= $this->section('content') ?>
     <div class="bg-white p-8 rounded-xl shadow-md w-full">
     <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Upload File</h2>
-    <form action="<?=base_url("/admin/gallery/upload")?>" method="POST" enctype="multipart/form-data" class="space-y-6">
+    <form action="<?=base_url("/admin/gallery/upload")?>" id="file_upload_form" method="POST" enctype="multipart/form-data" class="space-y-6">
       <div>
         <label for="file" class="block text-sm font-medium text-gray-700">Select a file</label>
         <input type="file" name="files[]" id="file"
@@ -17,8 +17,17 @@
 
       <div class="text-center">
         <button type="submit"
-                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full">
-          Upload
+                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full flex justify-center">
+          Upload 
+            <div id="loadingSpinner" class="flex ml-5 justify-center hidden">
+      <svg class="animate-spin h-6 w-6 text-white-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+           viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor"
+              d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+      </svg>
+    </div>
         </button>
       </div>
     </form>
@@ -64,6 +73,34 @@
       </div>
     </div>
   </main>
+
+
+  <script>
+    $(document).ready(()=>{
+            $("#file_upload_form").on("submit",function(e){
+                e.preventDefault();
+                formData = new FormData(document.querySelector('#file_upload_form'));
+                $('#loadingSpinner').removeClass('hidden');
+
+
+                $.ajax({
+                     method: "POST",
+                      url: "<?=base_url("/admin/gallery/upload")?>",
+                       data:formData,
+                       processData: false,
+                       contentType: false,
+                })
+                .done(function(resp){
+                    $('#loadingSpinner').addClass('hidden');
+                    alert('Visi faili ir ielādēti');
+                })
+                .fail(function(resp){
+                    alert('Kļūda: '+ resp.responseJSON.message);
+                })
+            })
+    })
+
+  </script>
     
 <?= $this->endSection() ?>
 
