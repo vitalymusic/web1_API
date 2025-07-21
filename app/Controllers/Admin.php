@@ -54,9 +54,16 @@ class Admin extends BaseController
 
     }
     public function posts(){
-        if(!$this->checkUser()){
-            return redirect()-> to("/admin/login");
-         };
+        // if(!$this->checkUser()){
+        //     return redirect()-> to("/admin/login");
+        //  };
+
+        
+
+
+
+
+
 
          $data["title"] = "Raksti";
         return view('admin/posts',$data);
@@ -108,9 +115,9 @@ class Admin extends BaseController
     }
 
     public function list_files(){
-                // if(!$this->checkUser()){
-                // return NULL;
-                //  };
+                if(!$this->checkUser()){
+                return NULL;
+                 };
 
 
                 $folder = FCPATH . 'uploads/';
