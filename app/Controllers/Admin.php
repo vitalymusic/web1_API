@@ -95,10 +95,11 @@ class Admin extends BaseController
             ]);
         }
 
-        $newName = $file->getRandomName();
+        $newName = $file->getClientName();
         $file->move(FCPATH . 'uploads', $newName); // var mainīt uz PUBLIC folderi, ja vajag tiešu piekļuvi
 
-        $url = base_url(FCPATH . 'uploads/' . $newName); // norādi publiski pieejamu ceļu
+        $url = base_url('uploads/' . $newName); // norādi publiski pieejamu ceļu
+       
 
         return $this->response->setJSON([
             'uploaded' => true,
