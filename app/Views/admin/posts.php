@@ -3,10 +3,26 @@
 <?= $this->section('content') ?>
 <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/46.0.0/ckeditor5.css" crossorigin>
 <style>
+:root {
+	--ck-content-font-family: 'Lato';
+}
+
+.main-container {
+	font-family: var(--ck-content-font-family);
+	width: fit-content;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.editor-container_classic-editor .editor-container__editor {
+	min-width: 795px;
+	max-width: 795px;
+}
     .ck-editor__editable_inline {
 	min-height: 300px;
 
 }
+
 
 .ck-heading_heading1{
     font-size: 3rem;
@@ -102,27 +118,32 @@
 <script src="https://cdn.ckeditor.com/ckeditor5/46.0.0/translations/lv.umd.js" crossorigin></script>
 
 <script>
-  /**
+ /**
  * This configuration was generated using the CKEditor 5 Builder. You can modify it anytime using this link:
- * https://ckeditor.com/ckeditor-5/builder/?redirect=portal#installation/NoNgNARATAdA7DADBSAWAzOxAOKBWbPRYkVVKdOPATjlWu1QEZqcQ51tK7UUIAbAG4pEYYEzASpYUUwC6kagENsAMwBGAExAQ5QA
+ * https://ckeditor.com/ckeditor-5/builder/?redirect=portal#installation/NoNgNARATAdA7DADBSAWAzOxAOKBWbPRARiynRHTm0QOzhEQE5UpFV6onMQUIAbAG4pEYYMTCjRE6QF1IeOMQCmAQwBGqiLKA===
  */
 
 const {
 	ClassicEditor,
+	Alignment,
 	Autoformat,
 	AutoImage,
+	AutoLink,
 	Autosave,
-	BalloonToolbar,
 	BlockQuote,
-	BlockToolbar,
 	Bold,
-	CloudServices,
 	Emoji,
 	Essentials,
+	FontBackgroundColor,
+	FontColor,
+	FontFamily,
+	FontSize,
+	GeneralHtmlSupport,
 	Heading,
 	ImageBlock,
 	ImageCaption,
 	ImageInline,
+	ImageInsert,
 	ImageInsertViaUrl,
 	ImageResize,
 	ImageStyle,
@@ -133,13 +154,13 @@ const {
 	IndentBlock,
 	Italic,
 	Link,
-	LinkImage,
 	List,
 	ListProperties,
 	MediaEmbed,
 	Mention,
 	Paragraph,
 	PasteFromOffice,
+	SimpleUploadAdapter,
 	SourceEditing,
 	Table,
 	TableCaption,
@@ -165,15 +186,23 @@ const editorConfig = {
 			'|',
 			'heading',
 			'|',
+			'fontSize',
+			'fontFamily',
+			'fontColor',
+			'fontBackgroundColor',
+			'|',
 			'bold',
 			'italic',
 			'underline',
 			'|',
 			'emoji',
 			'link',
+			'insertImage',
 			'mediaEmbed',
 			'insertTable',
 			'blockQuote',
+			'|',
+			'alignment',
 			'|',
 			'bulletedList',
 			'numberedList',
@@ -184,20 +213,25 @@ const editorConfig = {
 		shouldNotGroupWhenFull: false
 	},
 	plugins: [
+		Alignment,
 		Autoformat,
 		AutoImage,
+		AutoLink,
 		Autosave,
-		BalloonToolbar,
 		BlockQuote,
-		BlockToolbar,
 		Bold,
-		CloudServices,
 		Emoji,
 		Essentials,
+		FontBackgroundColor,
+		FontColor,
+		FontFamily,
+		FontSize,
+		GeneralHtmlSupport,
 		Heading,
 		ImageBlock,
 		ImageCaption,
 		ImageInline,
+		ImageInsert,
 		ImageInsertViaUrl,
 		ImageResize,
 		ImageStyle,
@@ -208,13 +242,13 @@ const editorConfig = {
 		IndentBlock,
 		Italic,
 		Link,
-		LinkImage,
 		List,
 		ListProperties,
 		MediaEmbed,
 		Mention,
 		Paragraph,
 		PasteFromOffice,
+		SimpleUploadAdapter,
 		SourceEditing,
 		Table,
 		TableCaption,
@@ -226,8 +260,19 @@ const editorConfig = {
 		TodoList,
 		Underline
 	],
-	balloonToolbar: ['bold', 'italic', '|', 'link', '|', 'bulletedList', 'numberedList'],
-	blockToolbar: ['bold', 'italic', '|', 'link', 'insertTable', '|', 'bulletedList', 'numberedList', 'outdent', 'indent'],
+    simpleUpload: {
+        uploadUrl: '<?=base_url("/admin/post/upload")?>',
+        error: {
+            "message": "The image upload failed because the image was too big (max 1.5MB)."
+	    },
+    },
+	fontFamily: {
+		supportAllValues: true
+	},
+	fontSize: {
+		options: [10, 12, 14, 'default', 18, 20, 22],
+		supportAllValues: true
+	},
 	heading: {
 		options: [
 			{
@@ -273,6 +318,16 @@ const editorConfig = {
 			}
 		]
 	},
+	htmlSupport: {
+		allow: [
+			{
+				name: /^.*$/,
+				styles: true,
+				attributes: true,
+				classes: true
+			}
+		]
+	},
 	image: {
 		toolbar: [
 			'toggleImageCaption',
@@ -285,6 +340,7 @@ const editorConfig = {
 			'resizeImage'
 		]
 	},
+
 	language: 'lv',
 	licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3ODE3NDA3OTksImp0aSI6IjQyZDE2YTM0LTdiNTMtNGE0ZS1hMmE3LTIwZGE3OGE5ZGUwNSIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiXSwiZmVhdHVyZXMiOlsiRFJVUCIsIkUyUCIsIkUyVyJdLCJ2YyI6IjUzMGU1ZTU3In0.F3z9OozbYqWJiEqm4CYqICGla2aoemLIc69Sbcev0xGPB-pPfy3PjOA9GTW_5gOgVWS9hVoBZdet02ta8rxtqA',
 	link: {
@@ -324,6 +380,7 @@ const editorConfig = {
 };
 
 ClassicEditor.create(document.querySelector('#editor'), editorConfig);
+
                   
 </script>
 

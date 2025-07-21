@@ -85,6 +85,27 @@ class Admin extends BaseController
 
     }
 
+    public function upload_image(){
+            $file = $this->request->getFile('upload');
+
+        if (!$file->isValid() || $file->hasMoved()) {
+            return $this->response->setJSON([
+                'uploaded' => false,
+                'error' => ['message' => 'File upload error.']
+            ]);
+        }
+
+        $newName = $file->getRandomName();
+        $file->move(FCPATH . 'uploads', $newName); // var mainīt uz PUBLIC folderi, ja vajag tiešu piekļuvi
+
+        $url = base_url(FCPATH . 'uploads/' . $newName); // norādi publiski pieejamu ceļu
+
+        return $this->response->setJSON([
+            'uploaded' => true,
+            'url' => $url
+        ]);
+    }
+
 
     public function gallery(){
         // if(!$this->checkUser()){

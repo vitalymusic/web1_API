@@ -39,6 +39,7 @@ $routes->get('/admin/users', 'Admin::users');
 $routes->get('/admin/posts', 'Admin::posts');
 
 $routes->post('admin/posts/create', 'Admin::create_post');
+$routes->post('admin/posts/upload', 'Admin::upload_image');
 
 $routes->get('/admin/gallery', 'Admin::gallery');
 $routes->get('/admin/logout', 'Admin::logout');
