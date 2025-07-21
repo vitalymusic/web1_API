@@ -71,6 +71,21 @@ class Admin extends BaseController
          $data["title"] = "Raksti";
         return view('admin/posts',$data);
     }
+    public function create_post(){
+
+        $data = $this->request->getPost();
+        $builder = $this->db->table('posts');
+       $result = $builder->insert([
+            'post_title'=>$data["name"],
+            'post_content'=>$data["message"]
+        ]);
+        if($result){
+                 return $this->response->setJSON(["saved"=>"ok"]); 
+        }
+
+    }
+
+
     public function gallery(){
         // if(!$this->checkUser()){
         //     return redirect()-> to("/admin/login");
