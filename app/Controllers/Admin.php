@@ -58,13 +58,16 @@ class Admin extends BaseController
         //     return redirect()-> to("/admin/login");
         //  };
 
-        
 
+         $posts = [];
+        $builder = $this->db->table('posts');
+        $query = $builder->get();
 
+          foreach ($query->getResult() as $row) {
+               $posts[] = $row;
+            }
 
-
-
-
+         $data["posts"] = $posts;
          $data["title"] = "Raksti";
         return view('admin/posts',$data);
     }
