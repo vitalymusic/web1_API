@@ -343,7 +343,10 @@ ClassicEditor.create(document.querySelector('#editor'), editorConfig);
                 e.preventDefault();
                 data = $('#new_post_form').serialize();
                 $.post('<?=base_url('admin/posts/create')?>',data,(resp)=>{
-                    console.log(resp);
+                   if(resp.saved=="ok"){
+                         $('#myModal').addClass('hidden');
+                         window.location.reload();
+                   }
                 })
 
          })
